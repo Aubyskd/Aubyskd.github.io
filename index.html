@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> WELCOME BACK | 个人主页</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #fff;
+            --bg-dark: #050505;
+            --transition-curve: cubic-bezier(0.76, 0, 0.24, 1);
+            --font-main: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--accent);
+            font-family: var(--font-main);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* --- 背景层 --- */
+        .bg-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            /* 占位图：替换为 ./assets/images/bg.jpg */
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6)),
+                        url('https://images.unsplash.com/photo-1477346611705-65d1883cee1e?auto=format&fit=crop&q=80&w=2070');
+            background-size: cover;
+            background-position: center;
+            transition: transform 2s var(--transition-curve);
+        }
+
+        /* --- 全屏加载 UI (结合 V1 的灵动) --- */
+        #loader {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #000;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s var(--transition-curve), visibility 0.8s;
+        }
+
+        .loader-line {
+            width: 0; height: 1px;
+            background: var(--accent);
+            transition: width 1.2s var(--transition-curve);
+        }
+
+        .loader-text {
+            margin-top: 20px;
+            font-size: 10px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            opacity: 0.5;
+        }
+
+        /* --- 导航栏--- */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 40px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+
+        .nav-group { display: flex; gap: 40px; }
+        .nav-link { 
+            cursor: pointer; 
+            text-decoration: none; 
+            color: inherit; 
+            opacity: 0.6; 
+            transition: 0.3s;
+        }
+        .nav-link:hover { opacity: 1; }
+
+        /* --- 音乐列表 (Glassmorphism 效果) --- */
+        #sound-panel {
+            position: absolute;
+            top: 80px; right: 60px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(15px);
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 101;
+        }
+
+        /* --- 内容区域布局 (V2 的排版) --- */
+        .page-content {
+            height: 100vh;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 10%;
+            text-align: center;
+        }
+
+        .page-content.active { display: flex; animation: fadeIn 1s forwards; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 120px;
+            font-weight: 100;
+            line-height: 0.85;
+            letter-spacing: -2px;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 200;
+            margin-bottom: 30px;
+        }
+
+        .description {
+            max-width: 600px;
+            font-weight: 300;
+            line-height: 1.8;
+            opacity: 0.8;
+        }
+
+        /* --- 全屏菜单遮罩 --- */
+        #menu-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 500;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .menu-item {
+            font-size: 42px;
+            font-weight: 100;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: 0.5s;
+        }
+        .menu-item:hover { letter-spacing: 8px; color: #888; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div class="loader-line" id="loader-line"></div>
+        <div class="loader-text">Loading Experience</div>
+    </div>
+
+    <div class="bg-overlay" id="bg"></div>
+
+    <nav>
+        <div class="nav-group">
+            </div>
+        <div class="nav-group">
+            <span class="nav-link" onclick="toggleSound()">SOUND</span>
+            <span class="nav-link" onclick="toggleMenu(true)">MENU</span>
+        </div>
+    </nav>
+
+    <div id="sound-panel">
+        <div class="nav-link" onclick="playMusic('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3')">Ambient Flow</div>
+        <div class="nav-link" onclick="playMusic('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3')">Deep Focus</div>
+        <div class="nav-link" onclick="stopMusic()">MUTE</div>
+    </div>
+
+    <div id="menu-overlay">
+        <div class="nav-link" style="position:absolute; top:40px; right:60px;" onclick="toggleMenu(false)">CLOSE</div>
+        <div class="menu-item" onclick="navigate('home')">HOME</div>
+        <div class="menu-item" onclick="navigate('bio')">个人简介</div>
+        <div class="menu-item" onclick="navigate('reading')">阅读经历</div>
+        <div class="menu-item" onclick="navigate('hobbies')">爱好安利</div>
+    </div>
+
+    <section id="home" class="page-content active">
+        <h1>WELCOME<br><br>It's Rhaelys</h1>
+    </section>
+
+    <section id="bio" class="page-content">
+        <h2 class="section-title">个人简介</h2>
+        <p class="description">一个尚未脱离低级趣味的人。</p>
+    </section>
+
+    <section id="reading" class="page-content">
+        <h2 class="section-title">阅读经历</h2>
+        <p class="description">不爱看书。</p>
+    </section>
+
+    <section id="hobbies" class="page-content">
+        <h2 class="section-title">爱好安利</h2>
+        <p class="description">爱好不多。</p>
+    </section>
+
+    <audio id="audio-player" loop></audio>
+
+    <script>
+        // 初始加载动画
+        window.addEventListener('load', () => {
+            const line = document.getElementById('loader-line');
+            const loader = document.getElementById('loader');
+            line.style.width = '200px';
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => { loader.style.visibility = 'hidden'; }, 800);
+            }, 1500);
+        });
+
+        // 页面跳转逻辑 (核心转场)
+        function navigate(pageId) {
+            toggleMenu(false);
+            const loader = document.getElementById('loader');
+            const line = document.getElementById('loader-line');
+            
+            // 触发全屏转场 UI
+            line.style.width = '0';
+            loader.style.visibility = 'visible';
+            loader.style.opacity = '1';
+
+            setTimeout(() => {
+                line.style.width = '200px';
+                // 切换内容
+                document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+                document.getElementById(pageId).classList.add('active');
+                
+                // 背景微动
+                document.getElementById('bg').style.transform = 'scale(1.1) rotate(1deg)';
+
+                setTimeout(() => {
+                    loader.style.opacity = '0';
+                    document.getElementById('bg').style.transform = 'scale(1) rotate(0deg)';
+                    setTimeout(() => { loader.style.visibility = 'hidden'; }, 800);
+                }, 1000);
+            }, 800);
+        }
+
+        // 音乐控制
+        const player = document.getElementById('audio-player');
+        function toggleSound() {
+            const panel = document.getElementById('sound-panel');
+            panel.style.display = (panel.style.display === 'flex') ? 'none' : 'flex';
+        }
+        function playMusic(src) {
+            player.src = src;
+            player.play();
+            toggleSound();
+        }
+        function stopMusic() {
+            player.pause();
+            toggleSound();
+        }
+
+        // 菜单控制
+        function toggleMenu(show) {
+            document.getElementById('menu-overlay').style.display = show ? 'flex' : 'none';
+        }
+    </script>
+</body>
+</html>
