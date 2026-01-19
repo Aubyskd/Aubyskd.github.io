@@ -31,7 +31,7 @@
             z-index: -1;
             /* 占位图：替换为 ./assets/images/bg.jpg */
             background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6)),
-                        url('https://images.unsplash.com/photo-1477346611705-65d1883cee1e?auto=format&fit=crop&q=80&w=2070');
+                        url('./assets/images/bg.jpg');
             background-size: cover;
             background-position: center;
             transition: transform 2s var(--transition-curve);
@@ -183,9 +183,15 @@
     </nav>
 
     <div id="sound-panel">
-        <div class="nav-link" onclick="playMusic('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3')">Ambient Flow</div>
-        <div class="nav-link" onclick="playMusic('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3')">Deep Focus</div>
-        <div class="nav-link" onclick="stopMusic()">MUTE</div>
+        <div class="nav-link" onclick="playMusic('./assets/audio/淡月之舞.mp3')">淡月之舞</div>
+        <div class="nav-link" onclick="playMusic('./assets/audio/绿丘焕然.mp3')">绿丘焕然</div>        
+        <div class="nav-link" onclick="playMusic('./assets/audio/不觉入梦里.mp3')">不觉入梦里</div>
+        <div class="nav-link" onclick="playMusic('./assets/audio/游步欣愉.mp3')">游步欣愉</div>
+        <div class="nav-link" onclick="playMusic('./assets/audio/泛羽流月.mp3')">泛羽流月</div>
+        <div class="nav-link" onclick="playMusic('./assets/audio/风清月白.mp3')">风清月白</div>
+        <div class="nav-link" onclick="playMusic('./assets/audio/锦彩之梦.mp3')">锦彩之梦</div>
+        <div class="nav-link" onclick="playMusic('./assets/audio/夜伴微火.mp3')">夜伴微火</div>
+        <div class="nav-link" onclick="stopMusic()">STOP</div>
     </div>
 
     <div id="menu-overlay">
