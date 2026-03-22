@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>学习 on document</title>
+    <link>http://localhost:1313/tags/%E5%AD%A6%E4%B9%A0/</link>
+    <description>Recent content in 学习 on document</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 22 Mar 2026 10:00:00 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>第一篇随笔：从今天开始记录</title>
+      <link>http://localhost:1313/posts/first-pos/</link>
+      <pubDate>Sun, 22 Mar 2026 10:00:00 +0800</pubDate>
+      <guid>http://localhost:1313/posts/first-pos/</guid>
+      <description>&lt;p&gt;&lt;em&gt;&lt;strong&gt;First Day&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;日常随笔&lt;/strong&gt;：独处时的思考、读诗的感悟。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;技术沉淀&lt;/strong&gt;：学习笔记、相关算法探索以及项目踩坑记录。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;生活碎片&lt;/strong&gt;：喜欢的音乐、游戏里的故事。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“Amor Vincit Omnia”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;期待这个小小的站点能见证我的成长，也为未来的职业生涯打下坚实的基础。Hello World!&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,9 @@
+baseURL = 'https://Aubyskd.github.io/'
+languageCode = 'zh-cn'
+title = 'document'
+theme = 'PaperMod'
+
+[params]
+  env = 'production'
+  author = 'Rhaelys·Sun'
+  description = '记录计算机学习、项目经验与日常随笔'
